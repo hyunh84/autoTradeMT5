@@ -11,6 +11,7 @@ import MetaTrader5 as mt5
 from PyQt5.QtCore import Qt, QTimer
 from PyQt5.QtGui import QBrush, QColor
 from strategy.mgt_strategy import StrategyManagerWindow  # 전략 관리 창 import
+from openai.ai_prompt import AIPrompt
 
 class AutoTradeApp(QMainWindow):
 	def __init__(self):
@@ -94,6 +95,10 @@ class AutoTradeApp(QMainWindow):
 			}
 		""")
 		main_layout.addWidget(self.account_table)
+
+		# AI 프롬프트 메뉴
+		menu.addSeparator()
+		menu.addAction("AI 프롬프트", self.open_ai_prompt)
 
 		# 로그 출력창
 		self.log_box = QTextEdit()
@@ -257,6 +262,11 @@ class AutoTradeApp(QMainWindow):
 		except Exception:
 			pass
 		event.accept()
+
+	# AI 프롬프트 화면 전환
+	def open_ai_prompt(self):
+		self.ai_prompt = AIPrompt()
+		self.ai_prompt.show()
 
 # 프로그램 실행
 if __name__ == "__main__":
