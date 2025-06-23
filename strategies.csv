@@ -1,2 +1,2 @@
 title,filepath
-Ichimoku-based Trading Strategy SHH1,strategy\myStrategy\ichimoku_strategy.py
+Ichimoku_Breakout_Strategy,strategy\myStrategy\Ichimoku_Breakout_Strategy.py
