@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# 가상환경
+venv/
+.env
+
+# IDE/Editor
+.idea/
+.vscode/
+*.swp
+
+# 운영체제 파일
+.DS_Store
+Thumbs.db
+
+
+# node_modules: 반드시 무시!
+node_modules/
+build/
+dist/
+.env
+
+# IDE/Editor
+.idea/
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
