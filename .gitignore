@@ -17,7 +17,7 @@ venv/
 Thumbs.db
 
 
-# node_modules: 반드시 무시! 
+# node_modules: 반드시 무시!
 node_modules/
 build/
 dist/
