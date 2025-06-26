@@ -1,7 +1,7 @@
 import sys
 from PyQt5.QtWidgets import QApplication, QStackedWidget
 from gui.main_dashboard import MainDashboard
-from gui.text_window import BacktestWindow
+from gui.backtest_window import BacktestWindow
 
 import MetaTrader5 as mt5
 
@@ -24,24 +24,29 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
     stack = QStackedWidget()
 
+    # === 1. 각 화면 위젯 생성 ===
     main_dashboard = MainDashboard()
     backtest_window = BacktestWindow()
     stack.addWidget(main_dashboard)   # index 0: 메인
     stack.addWidget(backtest_window)  # index 1: 백테스트
 
-    # 연결 + 계좌정보
+    # === 2. MT5 계좌 연결 및 정보 표시 ===
     account_info, connected = get_mt5_account_info(main_dashboard.append_log)
     main_dashboard.set_connection_status(connected)
     main_dashboard.set_account_info(account_info)
 
-    # 1. 메뉴에서 "백테스트" 시그널 연결 → 화면 전환
+    # === 3. 메뉴 → "백테스트" 선택 시 화면 전환 ===
     def show_backtest():
         stack.setCurrentIndex(1)
     main_dashboard.open_backtest.connect(show_backtest)
 
-    # 2. 필요하면 백테스트에서 다시 메인으로 돌아오는 시그널도 연결 가능
+    # === 4. 백테스트 → "홈" 버튼 시 메인화면 전환 ===
+    def show_main():
+        stack.setCurrentIndex(0)
+    backtest_window.go_main_signal.connect(show_main)
 
-    stack.setCurrentIndex(0)
+    # === 5. QStackedWidget 기본 세팅 및 실행 ===
+    stack.setCurrentIndex(0)      # 첫 화면: 메인 대시보드
     stack.resize(650, 700)
     stack.show()
     sys.exit(app.exec_())
