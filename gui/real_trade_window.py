@@ -73,9 +73,10 @@ class RealtimeTradeWindow(QWidget):
         self.start_btn.clicked.connect(self.start_trading)
         self.stop_btn.clicked.connect(self.stop_trading)
 
-        self.trade_table = QTableWidget(0, 7)
+        # 7→8로 변경, "판단근거" 열 추가
+        self.trade_table = QTableWidget(0, 8)
         self.trade_table.setHorizontalHeaderLabels([
-            "진입시각", "청산시각", "포지션", "진입가", "청산가", "수익", "랏"
+            "진입시각", "청산시각", "포지션", "진입가", "청산가", "수익", "랏", "판단근거"
         ])
         self.trade_table.setFixedHeight(180)
         layout.addWidget(self.trade_table)
@@ -174,6 +175,9 @@ class RealtimeTradeWindow(QWidget):
             self.trade_table.setItem(row, 4, QTableWidgetItem(str(round(exit_price, 3))))
             self.trade_table.setItem(row, 5, QTableWidgetItem(str(round(profit, 3))))
             self.trade_table.setItem(row, 6, QTableWidgetItem(lot_val))
+            # 판단근거 열 (result dict에 'reason'이 있으면 표시, 없으면 '-')
+            reason = result.get('reason', "-")
+            self.trade_table.setItem(row, 7, QTableWidgetItem(str(reason)))
 
     def append_log(self, text):
         self.console.append(text)
